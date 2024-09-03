@@ -1,10 +1,16 @@
 import { FC } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { useSelector } from 'react-redux';
+import store from '../../services/store';
+import { TIngredient } from '@utils-types';
+import { useParams } from 'react-router-dom';
+import { selectConstructorState } from '../../features/constructorSlice';
 
 export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
-  const ingredientData = null;
+  const { data } = useSelector(selectConstructorState);
+  const pageId = useParams();
+  const ingredientData = data.find((ingredient) => pageId.id == ingredient._id);
 
   if (!ingredientData) {
     return <Preloader />;

@@ -1,67 +1,46 @@
-import { FC, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { FC, useEffect } from 'react';
+import { Preloader } from '@ui';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  numberedSlice,
+  numberedThunk
+} from '../../features/numberedOrderSlice';
+import { useParams } from 'react-router-dom';
+import { feedSlice } from '../../features/feedSlice';
+import { profieOrderSlice } from '../../features/profileOrdersSlice';
+import { OrderInfoConnector } from './order-info-connector';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams();
+  const dispatch = useDispatch();
 
-  const ingredients: TIngredient[] = [];
-
-  /* Готовим данные для отображения */
-  const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
-
-    const date = new Date(orderData.createdAt);
-
-    type TIngredientsWithCount = {
-      [key: string]: TIngredient & { count: number };
-    };
-
-    const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item) => {
-        if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
-          if (ingredient) {
-            acc[item] = {
-              ...ingredient,
-              count: 1
-            };
-          }
-        } else {
-          acc[item].count++;
-        }
-
-        return acc;
-      },
-      {}
+  const order = useSelector((state) => {
+    let order = state[feedSlice.reducerPath].orders.find(
+      (o) => o.number === +number!
     );
+    if (order) {
+      return order;
+    }
 
-    const total = Object.values(ingredientsInfo).reduce(
-      (acc, item) => acc + item.price * item.count,
-      0
+    order = state[profieOrderSlice.reducerPath].orders.find(
+      (o) => o.number === +number!
     );
+    if (order) {
+      return order;
+    }
 
-    return {
-      ...orderData,
-      ingredientsInfo,
-      date,
-      total
-    };
-  }, [orderData, ingredients]);
+    return state[numberedSlice.reducerPath].order;
+  });
 
-  if (!orderInfo) {
+  useEffect(() => {
+    if (!order) {
+      dispatch(numberedThunk(+number!));
+    }
+  }, []);
+
+  if (!order) {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  return <OrderInfoConnector order={order} />;
 };
