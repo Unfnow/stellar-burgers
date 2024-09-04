@@ -13,7 +13,6 @@ export const ProfileMenu: FC = () => {
     deleteCookie('accessToken');
     localStorage.removeItem('refreshToken');
     await dispatch(resetAuthSession());
-    navigate('/login');
   };
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;

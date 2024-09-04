@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
-import { useSelector } from 'react-redux';
-import store from '../../services/store';
+import store, { useSelector } from '../../services/store';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { selectConstructorState } from '../../features/constructorSlice';

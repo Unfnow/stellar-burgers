@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { selectAuthState } from '../../features/userSlice';
 import { Preloader } from '../ui';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from '../../services/store';
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -15,13 +15,15 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const { email, error, isLoading, name } = useSelector(selectAuthState);
   const isAuthenticated = email && name && !isLoading;
+  const location = useLocation();
+  const from = location.state?.from || '/';
   if (isLoading) return <Preloader />;
   if (protectionType === 'authRequired') {
     if (isAuthenticated) return children;
-    else return <Navigate replace to='/login' />;
+    else return <Navigate to='/login' state={{ from: location }} />;
   }
   if (protectionType === 'noAuthRequired') {
     if (!isAuthenticated) return children;
-    else return <Navigate replace to='/profile' />;
+    else return <Navigate to={from} />;
   }
 };

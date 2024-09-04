@@ -38,7 +38,6 @@ export const Register: FC = () => {
     const result = await dispatch(registerThunk({ email, password, name }));
     if (registerThunk.fulfilled.match(result)) {
       await dispatch(setCurrentSession(result.payload));
-      navigate('/profile');
     }
   };
 

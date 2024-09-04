@@ -13,11 +13,10 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { constructorThunk } from '../../features/constructorSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../services/store';
+import { AppDispatch, useDispatch } from '../../services/store';
 import { userThunk } from '../../features/userSlice';
 import { ProtectedRoute } from '../protectedRoute';
 

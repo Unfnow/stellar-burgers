@@ -32,7 +32,6 @@ export const Login: FC = () => {
     const result = await dispatch(loginThunk({ email, password }));
     if (loginThunk.fulfilled.match(result)) {
       await dispatch(setCurrentSession(result.payload));
-      navigate('/profile');
     }
   };
 
