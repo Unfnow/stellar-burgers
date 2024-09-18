@@ -1,5 +1,6 @@
 import { OrderInfoUI } from '@ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { TIngredient } from '@utils-types';
 
 const meta = {
   title: 'Example/OrderInfo',

@@ -3,12 +3,20 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
+import store, { useSelector } from '../../services/store';
+import { Preloader } from '@ui';
+import {
+  selectBuns,
+  selectConstructorState,
+  selectMains,
+  selectSauces
+} from '../../features/constructorSlice';
 
 export const BurgerIngredients: FC = () => {
-  /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
+  const { isIngredientsLoading } = useSelector(selectConstructorState);
+  const buns = useSelector(selectBuns);
+  const mains = useSelector(selectMains);
+  const sauces = useSelector(selectSauces);
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -47,21 +55,25 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
-
   return (
-    <BurgerIngredientsUI
-      currentTab={currentTab}
-      buns={buns}
-      mains={mains}
-      sauces={sauces}
-      titleBunRef={titleBunRef}
-      titleMainRef={titleMainRef}
-      titleSaucesRef={titleSaucesRef}
-      bunsRef={bunsRef}
-      mainsRef={mainsRef}
-      saucesRef={saucesRef}
-      onTabClick={onTabClick}
-    />
+    <>
+      {isIngredientsLoading ? (
+        <Preloader />
+      ) : (
+        <BurgerIngredientsUI
+          currentTab={currentTab}
+          buns={buns}
+          mains={mains}
+          sauces={sauces}
+          titleBunRef={titleBunRef}
+          titleMainRef={titleMainRef}
+          titleSaucesRef={titleSaucesRef}
+          bunsRef={bunsRef}
+          mainsRef={mainsRef}
+          saucesRef={saucesRef}
+          onTabClick={onTabClick}
+        />
+      )}
+    </>
   );
 };

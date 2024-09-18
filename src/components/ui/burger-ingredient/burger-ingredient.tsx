@@ -12,7 +12,8 @@ import { TBurgerIngredientUIProps } from './type';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
-    const { image, price, name, _id } = ingredient;
+    const { image, price, name, _id, fat, calories, carbohydrates, proteins } =
+      ingredient;
 
     return (
       <li className={styles.container}>
