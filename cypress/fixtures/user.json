@@ -1,0 +1,10 @@
+{
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDIxODdlMTE5ZDQ1MDAxYjUwMzBkNiIsImlhdCI6MTcyNjY4NjczNCwiZXhwIjoxNzI2Njg3OTM0fQ.mej70eMGHl8XesCV-e-mPFZauYGHMc4wyXw6GEduNR0",
+  "refreshToken": "d401be911c1d58a82c3f3d4125a1fde16a9b28bee2b9f00056aa8b882259925a0a75eee29b874b95",
+  "success": true,
+  "user": {
+    "email": "denissigaev@gmail.com",
+    "name": "Жак-Ив Кусто",
+    "password": "12345"
+  }
+}
