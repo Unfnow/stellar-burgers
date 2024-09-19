@@ -11,8 +11,8 @@ import {
   orderThunk,
   resetOrder,
   selectburgerState
-} from '../../features/burgerConstructorSlice';
-import { selectAuthState } from '../../features/userSlice';
+} from '../../features/burgerconstructorSlice/burgerConstructorSlice';
+import { selectAuthState } from '../../features/userSlice/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {

@@ -13,7 +13,7 @@ import {
   setRegisterEmail,
   setRegisterPassword,
   setRegisterUserName
-} from '../../features/userSlice';
+} from '../../features/userSlice/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const Register: FC = () => {

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { selectAuthState } from '../../features/userSlice';
+import { selectAuthState } from '../../features/userSlice/userSlice';
 import { Preloader } from '../ui';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';

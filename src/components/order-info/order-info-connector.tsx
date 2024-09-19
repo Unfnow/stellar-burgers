@@ -2,7 +2,7 @@ import { TIngredient, TOrder } from '@utils-types';
 import React, { useMemo } from 'react';
 import { OrderInfoUI } from '@ui';
 import { useSelector } from '../../services/store';
-import { selectConstructorState } from '../../features/constructorSlice';
+import { selectConstructorState } from '../../features/constructorSlice/constructorSlice';
 
 function calculateCount<T>(arr: Array<T>, val: T): number {
   return arr.reduce((a: number, v: T) => (v === val ? a + 1 : a), 0);

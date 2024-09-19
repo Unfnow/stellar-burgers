@@ -15,9 +15,9 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { constructorThunk } from '../../features/constructorSlice';
+import { constructorThunk } from '../../features/constructorSlice/constructorSlice';
 import { AppDispatch, useDispatch } from '../../services/store';
-import { userThunk } from '../../features/userSlice';
+import { userThunk } from '../../features/userSlice/userSlice';
 import { ProtectedRoute } from '../protectedRoute';
 
 const App = () => {

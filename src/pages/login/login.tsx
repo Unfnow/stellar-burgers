@@ -12,7 +12,7 @@ import {
   setCurrentSession,
   setloginEmail,
   setloginPassword
-} from '../../features/userSlice';
+} from '../../features/userSlice/userSlice';
 
 export const Login: FC = () => {
   const { email, password } = useSelector(selectlogin);
