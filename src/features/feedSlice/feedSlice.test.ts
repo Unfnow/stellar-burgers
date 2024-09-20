@@ -14,10 +14,12 @@ describe('feedSlice test', () => {
   test('extraReducers rejected test', () => {
     const beforeState = {
       ...feedState,
-      isLoaded: false
+      isLoaded: false,
+      error: 'rejected'
     };
     const afterState = feedSliceReducer(beforeState, {
-      type: feedThunk.rejected.type
+      type: feedThunk.rejected.type,
+      error: new Error('rejected')
     });
 
     expect(beforeState).toEqual(afterState);

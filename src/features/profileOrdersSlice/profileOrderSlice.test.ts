@@ -19,10 +19,12 @@ describe('profieOrderSlice test', () => {
   test('extraReducers rejected test', () => {
     const beforeState = {
       ...initialOrderState,
-      isLoaded: false
+      isLoaded: false,
+      error: 'rejected'
     };
     const afterState = orderReducer(beforeState, {
-      type: profileOrderThunk.rejected.type
+      type: profileOrderThunk.rejected.type,
+      error: new Error('rejected')
     });
     expect(beforeState).toEqual(afterState);
   });

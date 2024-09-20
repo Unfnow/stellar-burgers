@@ -19,10 +19,12 @@ describe('profieOrderSlice test', () => {
   test('extraReducers rejected test', () => {
     const beforeState = {
       ...numberedState,
-      isLoaded: false
+      isLoaded: false,
+      error: 'rejected'
     };
     const afterState = numberedReducer(beforeState, {
-      type: numberedThunk.rejected.type
+      type: numberedThunk.rejected.type,
+      error: new Error('rejected')
     });
     expect(beforeState).toEqual(afterState);
   });

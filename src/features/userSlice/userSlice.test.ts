@@ -1,4 +1,5 @@
-import { Register } from '@pages';
+import store from '../../services/store';
+import { data } from '../fakedata';
 import {
   authSession,
   authSessionReducer,
@@ -23,7 +24,6 @@ import {
   TAuthState,
   userThunk
 } from './userSlice';
-import { error } from 'console';
 
 //registerSlice
 
@@ -66,7 +66,8 @@ describe('registerSlice test', () => {
       error: 'rejected'
     };
     const afterState = registerReducer(beforeState, {
-      type: registerThunk.rejected.type
+      type: registerThunk.rejected.type,
+      error: new Error('rejected')
     });
 
     expect(beforeState).toEqual(afterState);
@@ -115,7 +116,8 @@ describe('loginSlice test', () => {
       error: 'rejected'
     };
     const afterState = loginReducer(beforeState, {
-      type: loginThunk.rejected.type
+      type: loginThunk.rejected.type,
+      error: new Error('rejected')
     });
 
     expect(beforeState).toEqual(afterState);
@@ -136,6 +138,9 @@ describe('loginSlice test', () => {
 //authSession
 
 describe('authSessionSlice test', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   test('currentNameData test', () => {
     const reducer = authSessionReducer(
       AuthState,
@@ -230,6 +235,7 @@ describe('authSessionSlice test', () => {
     const afterState = authSessionReducer(AuthFakeState, action);
     expect(beforeState).toEqual(afterState);
   });
+
   test('extraReducers pending test', () => {
     const beforeState = {
       ...AuthState,
@@ -247,7 +253,8 @@ describe('authSessionSlice test', () => {
       error: 'rejected'
     };
     const afterState = authSessionReducer(beforeState, {
-      type: loginThunk.rejected.type
+      type: loginThunk.rejected.type,
+      error: new Error('rejected')
     });
 
     expect(beforeState).toEqual(afterState);
@@ -255,12 +262,21 @@ describe('authSessionSlice test', () => {
   test('extraReducers fulfilled test', () => {
     const beforeState = {
       ...AuthState,
-      isLoading: false
+      isLoading: false,
+      user: {
+        name: 'fakeName5',
+        email: 'fake5@gmail.com'
+      }
     };
     const afterState = authSessionReducer(beforeState, {
-      type: loginThunk.fulfilled.type
+      type: loginThunk.fulfilled.type,
+      payload: {
+        user: {
+          name: 'fakeName5',
+          email: 'fake5@gmail.com'
+        }
+      }
     });
-
     expect(beforeState).toEqual(afterState);
   });
 });

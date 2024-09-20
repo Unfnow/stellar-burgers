@@ -5,6 +5,8 @@ import {
   constructorThunk
 } from './constructorSlice';
 import { TIngredient } from '@utils-types';
+import store from 'src/services/store';
+import { error } from 'console';
 
 describe('constructorSlice test', () => {
   const fakeArray: Array<TIngredient> = [
@@ -54,10 +56,12 @@ describe('constructorSlice test', () => {
   test('extraReducers rejected test', () => {
     const beforeState = {
       ...initialfakeState,
-      isIngredientsLoading: true
+      isIngredientsLoading: true,
+      error: 'rejected'
     };
     const afterState = constructorReducer(beforeState, {
-      type: constructorThunk.rejected.type
+      type: constructorThunk.rejected.type,
+      error: new Error('rejected')
     });
 
     expect(beforeState).toEqual(afterState);
