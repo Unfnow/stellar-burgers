@@ -157,7 +157,7 @@ describe('authSessionSlice test', () => {
     expect(reducer.email).toEqual('fake3@mail.ru');
   });
   test('setCurrentSession test', () => {
-    const AuthFakeState: TAuthState = {
+    const AuthState: TAuthState = {
       email: '',
       name: '',
       error: '',
@@ -183,7 +183,7 @@ describe('authSessionSlice test', () => {
       error: '',
       isLoading: false
     };
-    const afterState = authSessionReducer(AuthFakeState, action);
+    const afterState = authSessionReducer(AuthState, action);
     expect(beforeState).toEqual(afterState);
   });
   test('setNameNEmail', () => {

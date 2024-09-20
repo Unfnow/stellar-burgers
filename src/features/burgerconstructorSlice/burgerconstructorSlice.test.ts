@@ -4,6 +4,7 @@ import {
   addItem,
   burgerConstructorReducer,
   BurgerSlice,
+  burgerState,
   moveDown,
   moveUp,
   removeItem
@@ -37,19 +38,6 @@ describe('BurgerConstructorSlice test', () => {
       image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
       image_mobile: 'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
       image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-    },
-    {
-      _id: '643d69a5c3f7b9001cfa093c',
-      calories: 420,
-      carbohydrates: 53,
-      fat: 24,
-      name: 'Краторная булка N-200i',
-      price: 1255,
-      proteins: 80,
-      type: 'bun',
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png'
     }
   ];
   globalThis.fetch = jest.fn(() => {
@@ -68,13 +56,6 @@ describe('BurgerConstructorSlice test', () => {
     jest.restoreAllMocks();
   });
 
-  const burgerFakeState: BurgerSlice = {
-    constructorItems: { bun: null, ingredients: expectedResult },
-    orderRequest: false,
-    orderModalData: null,
-    price: 0
-  };
-
   test('addItem test', () => {
     const fakeAddItem = {
       type: addItem.type,
@@ -83,52 +64,54 @@ describe('BurgerConstructorSlice test', () => {
         id: '001'
       }
     };
-    const lengthBefore = burgerFakeState.constructorItems.ingredients.length;
+    const lengthBefore = burgerState.constructorItems.ingredients.length;
 
-    const reducer = burgerConstructorReducer(burgerFakeState, fakeAddItem);
+    const reducer = burgerConstructorReducer(burgerState, fakeAddItem);
     const { constructorItems } = reducer;
     expect(constructorItems.ingredients[0]).toEqual(data[0]);
     expect(constructorItems.ingredients).toHaveLength(lengthBefore + 1);
   });
 
   test('removeItem test', () => {
-    const fakeAddItem = {
+    const lengthBefore = burgerState.constructorItems.ingredients.length;
+    const removeReducer = burgerConstructorReducer(burgerState, removeItem(0));
+    expect(removeReducer.constructorItems.ingredients).toHaveLength(
+      lengthBefore
+    );
+  });
+
+  test('moveItem test', () => {
+    const beforeState = {
+      constructorItems: { bun: null, ingredients: fakeArray },
+      orderRequest: false,
+      orderModalData: null,
+      price: 0
+    };
+    let moveState = burgerConstructorReducer(burgerState, {
       type: addItem.type,
       payload: {
         ...fakeArray[0],
         id: '001'
       }
-    };
-    const lengthBefore = burgerFakeState.constructorItems.ingredients.length;
-    const removeReducer = burgerConstructorReducer(
-      burgerFakeState,
-      removeItem(0)
-    );
-    expect(removeReducer.constructorItems.ingredients).toHaveLength(
-      lengthBefore - 1
-    );
-  });
-
-  test('moveItem test', () => {
-    const fakeAddItem = {
+    });
+    moveState = burgerConstructorReducer(moveState, {
       type: addItem.type,
       payload: {
         ...fakeArray[1],
         id: '002'
       }
-    };
+    });
+    console.log(moveState.constructorItems.ingredients);
+    const beforeItem = moveState.constructorItems.ingredients;
 
-    let moveBurgerState = burgerConstructorReducer(
-      burgerFakeState,
-      fakeAddItem
+    expect(moveState.constructorItems.ingredients).toHaveLength(
+      beforeState.constructorItems.ingredients.length
     );
-    const beforeItem = moveBurgerState.constructorItems.ingredients;
-    expect(moveBurgerState.constructorItems.ingredients).toHaveLength(2);
-    moveBurgerState = burgerConstructorReducer(moveBurgerState, moveUp(0));
+    let moveBurgerState = burgerConstructorReducer(moveState, moveUp(0));
     expect(moveBurgerState.constructorItems.ingredients[0]).toEqual(
       beforeItem[1]
     );
-    moveBurgerState = burgerConstructorReducer(burgerFakeState, moveDown(1));
+    moveBurgerState = burgerConstructorReducer(moveState, moveDown(1));
     expect(moveBurgerState.constructorItems.ingredients[0]).toEqual(
       beforeItem[0]
     );

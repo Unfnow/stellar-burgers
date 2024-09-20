@@ -14,7 +14,7 @@ export type BurgerSlice = Omit<
   'closeOrderModal' | 'onOrderClick'
 >;
 
-const burgerState: BurgerSlice = {
+export const burgerState: BurgerSlice = {
   constructorItems: { bun: null, ingredients: [] },
   orderRequest: false,
   orderModalData: null,
