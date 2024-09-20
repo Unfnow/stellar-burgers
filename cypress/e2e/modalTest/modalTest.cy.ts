@@ -1,6 +1,6 @@
 describe('modalTest', () => {
   before(() => {
-    cy.visit('http://localhost:4000'); // Открываем страницу
+    cy.visit(''); // Открываем страницу
     cy.intercept('GET', '/api/auth/user', { fixture: 'user.json' }); //Перехват запроса на эндпоинт api/auth/user
     cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }); //Перехват запроса на эндпоинт api/ingredients
     cy.intercept('POST', 'api/auth/token', { fixture: 'user.json' }); //Перехват запроса на эндпоинт api/auth/token

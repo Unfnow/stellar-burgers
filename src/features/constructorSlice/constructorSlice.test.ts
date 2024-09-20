@@ -2,7 +2,8 @@ import { ConstructorPageUIProps } from 'src/components/ui/pages/constructor-page
 import {
   constructor,
   constructorReducer,
-  constructorThunk
+  constructorThunk,
+  initialConstructorState
 } from './constructorSlice';
 import { TIngredient } from '@utils-types';
 import store from 'src/services/store';
@@ -24,14 +25,10 @@ describe('constructorSlice test', () => {
       image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png'
     }
   ];
-  const initialfakeState: ConstructorPageUIProps = {
-    isIngredientsLoading: true,
-    data: []
-  };
 
   test('constructor test', () => {
     const beforeState = {
-      ...initialfakeState,
+      ...initialConstructorState,
       isIngredientsLoading: true,
       data: []
     };
@@ -39,13 +36,13 @@ describe('constructorSlice test', () => {
       type: constructor.type,
       data: []
     };
-    const afterState = constructorReducer(initialfakeState, action);
+    const afterState = constructorReducer(initialConstructorState, action);
     expect(beforeState).toEqual(afterState);
   });
 
   test('extraReducers pending test', () => {
     const beforeState = {
-      ...initialfakeState,
+      ...initialConstructorState,
       isIngredientsLoading: true
     };
     const afterState = constructorReducer(beforeState, {
@@ -55,7 +52,7 @@ describe('constructorSlice test', () => {
   });
   test('extraReducers rejected test', () => {
     const beforeState = {
-      ...initialfakeState,
+      ...initialConstructorState,
       isIngredientsLoading: true,
       error: 'rejected'
     };
@@ -69,7 +66,7 @@ describe('constructorSlice test', () => {
   });
   test('extraReducers fulfilled test', () => {
     const beforeState = {
-      ...initialfakeState,
+      ...initialConstructorState,
       isIngredientsLoading: false,
       data: fakeArray
     };
@@ -77,7 +74,7 @@ describe('constructorSlice test', () => {
       type: constructorThunk.fulfilled.type,
       payload: fakeArray
     };
-    const afterState = constructorReducer(initialfakeState, action);
+    const afterState = constructorReducer(initialConstructorState, action);
     expect(beforeState).toEqual(afterState);
     expect(beforeState.data).toEqual(fakeArray);
   });

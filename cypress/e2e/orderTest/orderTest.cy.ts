@@ -1,6 +1,6 @@
 describe('orderTest', () => {
   before(() => {
-    cy.visit('http://localhost:4000'); // Открываем страницу
+    cy.visit(''); // Открываем страницу
     cy.intercept('GET', '/api/auth/user', { fixture: 'user.json' }); //Перехват запроса на эндпоинт api/auth/user
     cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }); //Перехват запроса на эндпоинт api/ingredients
     cy.intercept('POST', 'api/auth/token', { fixture: 'user.json' }); //Перехват запроса на эндпоинт api/auth/token
@@ -12,10 +12,11 @@ describe('orderTest', () => {
     cy.intercept('POST', 'api/orders', { fixture: 'order.json' }); //Перехват запроса на эндпоинт /orders
     cy.get(`[data-cy='burgerOredrBTN']`).click(); //Создание заказа
     cy.wait(2000); // Ожидание создания заказа
-    cy.get('#modals').find(`button`).should('be.visible'); //Проверка модального окна на открытие
-    cy.get('#modals').find(`h2`).should('have.text', '1234');
-    cy.get(`#modals`).find(`button`).click(); //Закрытие модального окна
-    cy.get(`#modals`).should(`not.be.visible`); //Проверяется успешность закрытия модального окна
+    const modal = cy.get('#modals');
+    modal.find(`button`).should('be.visible'); //Проверка модального окна на открытие
+    modal.find(`h2`).should('have.text', '1234');
+    modal.find(`button`).click(); //Закрытие модального окна
+    modal.should(`not.be.visible`); //Проверяется успешность закрытия модального окна
     cy.get(`[data-cy='constructor-bun']`).should('have.text', 'Выберите булки'); //Проверка конструктора на пустоту
     cy.get(`[data-cy='constructor-main']`).should(
       'have.text',

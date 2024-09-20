@@ -1,6 +1,6 @@
 describe('addIngredientsTest', function () {
   before(() => {
-    cy.visit('http://localhost:4000'); // Открываем страницу
+    cy.visit(''); // Открываем страницу
     cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }); //Перехват запроса на эндпоинт api/ingredients
   });
   it('Добавление ингредиента из списка в конструктор', () => {

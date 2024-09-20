@@ -7,14 +7,14 @@ export const constructorThunk = createAsyncThunk(
   getIngredientsApi
 );
 
-const initialState: ConstructorPageUIProps = {
+export const initialConstructorState: ConstructorPageUIProps = {
   isIngredientsLoading: true,
   data: []
 };
 
 export const constructorSlice = createSlice({
   name: 'constructorReducer',
-  initialState,
+  initialState: initialConstructorState,
   reducers: {
     constructor: (state: ConstructorPageUIProps) => {
       state.isIngredientsLoading = true;
