@@ -1,7 +1,7 @@
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
-import { BurgerConstructorUIProps } from '../../src/components/ui/burger-constructor/type';
+import { BurgerConstructorUIProps } from '../../components/ui/burger-constructor/type';
 import { v4 } from 'uuid';
 
 export const orderThunk = createAsyncThunk(
@@ -9,12 +9,12 @@ export const orderThunk = createAsyncThunk(
   orderBurgerApi
 );
 
-type BurgerSlice = Omit<
+export type BurgerSlice = Omit<
   BurgerConstructorUIProps,
   'closeOrderModal' | 'onOrderClick'
 >;
 
-const burgerState: BurgerSlice = {
+export const burgerState: BurgerSlice = {
   constructorItems: { bun: null, ingredients: [] },
   orderRequest: false,
   orderModalData: null,
@@ -35,6 +35,7 @@ export const burgerconstructorSlice = createSlice({
         } else {
           state.constructorItems.ingredients.push(action.payload);
         }
+        return state;
       },
       prepare: (ingredient: TConstructorIngredient) => ({
         payload: { ...ingredient, uniqueId: v4() }
@@ -45,6 +46,7 @@ export const burgerconstructorSlice = createSlice({
         state.constructorItems.ingredients.filter(
           (i) => i !== state.constructorItems.ingredients[action.payload]
         );
+      return state;
     },
     moveUp: (state: BurgerSlice, action: PayloadAction<number>) => {
       const {
@@ -63,6 +65,7 @@ export const burgerconstructorSlice = createSlice({
           ingredients[action.payload - 1]
         ];
       }
+      return state;
     },
     moveDown: (state: BurgerSlice, action: PayloadAction<number>) => {
       const {
@@ -78,6 +81,7 @@ export const burgerconstructorSlice = createSlice({
         elementWhichBeReplaced,
         elementToMoveUp
       ];
+      return state;
     },
     resetOrder: (state: BurgerSlice) => {
       state = burgerState;
@@ -107,4 +111,5 @@ export const burgerconstructorSlice = createSlice({
 export const { addItem, removeItem, moveUp, moveDown, resetOrder } =
   burgerconstructorSlice.actions;
 
+export const burgerConstructorReducer = burgerconstructorSlice.reducer;
 export const { selectburgerState } = burgerconstructorSlice.selectors;

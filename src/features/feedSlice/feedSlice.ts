@@ -1,13 +1,13 @@
-import { getFeedsApi, TFeedsResponse } from '@api';
+import { getFeedsApi, TFeedsResponse } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const feedThunk = createAsyncThunk('feed/getFeedsApi', getFeedsApi);
 
-type TFeedSlice = Omit<TFeedsResponse, 'success'> & {
+export type TFeedSlice = Omit<TFeedsResponse, 'success'> & {
   isLoaded: boolean;
 };
 
-const feedState: TFeedSlice = {
+export const feedState: TFeedSlice = {
   orders: [],
   isLoaded: false,
   total: 0,
@@ -17,11 +17,7 @@ const feedState: TFeedSlice = {
 export const feedSlice = createSlice({
   name: 'feedReducer',
   initialState: feedState,
-  reducers: {
-    feed: (state: TFeedSlice) => {
-      state.orders = [];
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(feedThunk.pending, (state) => {
       state.isLoaded = false;
@@ -46,4 +42,4 @@ export const feedSlice = createSlice({
 
 export const { selectFeed } = feedSlice.selectors;
 
-export const { feed } = feedSlice.actions;
+export const feedSliceReducer = feedSlice.reducer;

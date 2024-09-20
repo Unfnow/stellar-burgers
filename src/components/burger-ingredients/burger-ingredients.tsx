@@ -10,7 +10,7 @@ import {
   selectConstructorState,
   selectMains,
   selectSauces
-} from '../../features/constructorSlice';
+} from '../../features/constructorSlice/constructorSlice';
 
 export const BurgerIngredients: FC = () => {
   const { isIngredientsLoading } = useSelector(selectConstructorState);

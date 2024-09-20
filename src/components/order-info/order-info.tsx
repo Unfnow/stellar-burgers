@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   numberedSlice,
   numberedThunk
-} from '../../features/numberedOrderSlice';
+} from '../../features/numberedOrderSlice/numberedOrderSlice';
 import { useParams } from 'react-router-dom';
-import { feedSlice } from '../../features/feedSlice';
-import { profieOrderSlice } from '../../features/profileOrdersSlice';
+import { feedSlice } from '../../features/feedSlice/feedSlice';
+import { profieOrderSlice } from '../../features/profileOrdersSlice/profileOrdersSlice';
 import { OrderInfoConnector } from './order-info-connector';
 
 export const OrderInfo: FC = () => {

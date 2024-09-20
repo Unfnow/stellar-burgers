@@ -5,7 +5,10 @@ import store, {
   useDispatch,
   useSelector
 } from '../../services/store';
-import { selectAuthState, setNameNEmail } from '../../features/userSlice';
+import {
+  selectAuthState,
+  setNameNEmail
+} from '../../features/userSlice/userSlice';
 import { updateUserApi } from '@api';
 
 export const Profile: FC = () => {

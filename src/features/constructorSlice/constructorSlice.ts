@@ -1,4 +1,4 @@
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '../../utils/burger-api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ConstructorPageUIProps } from 'src/components/ui/pages/constructor-page/type';
 
@@ -7,14 +7,14 @@ export const constructorThunk = createAsyncThunk(
   getIngredientsApi
 );
 
-const initialState: ConstructorPageUIProps = {
+export const initialConstructorState: ConstructorPageUIProps = {
   isIngredientsLoading: true,
   data: []
 };
 
 export const constructorSlice = createSlice({
   name: 'constructorReducer',
-  initialState,
+  initialState: initialConstructorState,
   reducers: {
     constructor: (state: ConstructorPageUIProps) => {
       state.isIngredientsLoading = true;
@@ -46,5 +46,7 @@ export const constructorSlice = createSlice({
 
 export const { selectBuns, selectMains, selectSauces, selectConstructorState } =
   constructorSlice.selectors;
+
+export const constructorReducer = constructorSlice.reducer;
 
 export const { constructor } = constructorSlice.actions;

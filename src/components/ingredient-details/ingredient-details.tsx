@@ -4,7 +4,7 @@ import { IngredientDetailsUI } from '../ui/ingredient-details';
 import store, { useSelector } from '../../services/store';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
-import { selectConstructorState } from '../../features/constructorSlice';
+import { selectConstructorState } from '../../features/constructorSlice/constructorSlice';
 
 export const IngredientDetails: FC = () => {
   const { data } = useSelector(selectConstructorState);

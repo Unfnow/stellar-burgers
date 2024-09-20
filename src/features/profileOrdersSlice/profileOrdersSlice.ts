@@ -1,4 +1,4 @@
-import { getOrdersApi, TFeedsResponse } from '@api';
+import { getOrdersApi, TFeedsResponse } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const profileOrderThunk = createAsyncThunk(
@@ -10,7 +10,7 @@ type TFeedSlice = Omit<TFeedsResponse, 'success'> & {
   isLoaded: boolean;
 };
 
-const initialState: TFeedSlice = {
+export const initialOrderState: TFeedSlice = {
   orders: [],
   isLoaded: false,
   total: 0,
@@ -19,7 +19,7 @@ const initialState: TFeedSlice = {
 
 export const profieOrderSlice = createSlice({
   name: 'profieOrderReducer',
-  initialState,
+  initialState: initialOrderState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(profileOrderThunk.pending, (state) => {
@@ -42,3 +42,5 @@ export const profieOrderSlice = createSlice({
 });
 
 export const { selectOrders } = profieOrderSlice.selectors;
+
+export const orderReducer = profieOrderSlice.reducer;

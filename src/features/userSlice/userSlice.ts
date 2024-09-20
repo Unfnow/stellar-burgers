@@ -8,9 +8,9 @@ import {
   TRegisterData,
   TUserResponse,
   updateUserApi
-} from '@api';
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { deleteCookie, setCookie } from '../../src/utils/cookie';
+import { deleteCookie, setCookie } from '../../../src/utils/cookie';
 
 export const registerThunk = createAsyncThunk(
   'register/registerUserApi',
@@ -36,10 +36,10 @@ type TloginState = TLoginData & {
   isSubmited: boolean;
 };
 
-type TAuthState = Omit<TregisterState, 'password' | 'isSubmited'> & {
+export type TAuthState = Omit<TregisterState, 'password' | 'isSubmited'> & {
   isLoading: boolean;
 };
-const registerState: TregisterState = {
+export const registerState: TregisterState = {
   email: '',
   name: '',
   password: '',
@@ -47,14 +47,14 @@ const registerState: TregisterState = {
   isSubmited: false
 };
 
-const loginState: TloginState = {
+export const loginState: TloginState = {
   email: '',
   password: '',
   error: '',
   isSubmited: false
 };
 
-const AuthState: TAuthState = {
+export const AuthState: TAuthState = {
   email: '',
   name: '',
   error: '',
@@ -138,8 +138,6 @@ export const authSession = createSlice({
         name: payload.user.name,
         email: payload.user.email
       };
-      localStorage.setItem('refreshToken', payload.refreshToken);
-      setCookie('accessToken', payload.accessToken);
       return state;
     },
     setNameNEmail: (state, { payload }: PayloadAction<TUserResponse>) => {
@@ -178,14 +176,25 @@ export const authSession = createSlice({
 export const { setRegisterEmail, setRegisterUserName, setRegisterPassword } =
   registerSlice.actions;
 
-export const { selectRegister } = registerSlice.selectors;
-
 export const { setloginEmail, setloginPassword } = loginSlice.actions;
+
+export const { selectRegister } = registerSlice.selectors;
 
 export const { selectlogin } = loginSlice.selectors;
 
-export const { setCurrentSession, setNameNEmail, resetAuthSession } =
-  authSession.actions;
+export const {
+  currentEmailData,
+  currentNameData,
+  setCurrentSession,
+  setNameNEmail,
+  resetAuthSession
+} = authSession.actions;
 
 export const { selectEmail, selectName, selectAuthState } =
   authSession.selectors;
+
+export const registerReducer = registerSlice.reducer;
+
+export const loginReducer = loginSlice.reducer;
+
+export const authSessionReducer = authSession.reducer;

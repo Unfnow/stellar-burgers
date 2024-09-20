@@ -1,9 +1,4 @@
-import {
-  getFeedsApi,
-  getOrderByNumberApi,
-  TFeedsResponse,
-  TOrderResponse
-} from '@api';
+import { getOrderByNumberApi } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -14,10 +9,12 @@ export const numberedThunk = createAsyncThunk(
 
 type TNumberedSlice = {
   order: TOrder | null;
+  isLoaded: boolean;
 };
 
-const numberedState: TNumberedSlice = {
-  order: null
+export const numberedState: TNumberedSlice = {
+  order: null,
+  isLoaded: false
 };
 
 export const numberedSlice = createSlice({
@@ -25,8 +22,19 @@ export const numberedSlice = createSlice({
   initialState: numberedState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(numberedThunk.pending, (state) => {
+      state.isLoaded = false;
+      return state;
+    });
+    builder.addCase(numberedThunk.rejected, (state) => {
+      state.isLoaded = false;
+      return state;
+    });
     builder.addCase(numberedThunk.fulfilled, (state, action) => {
+      state.isLoaded = true;
       state.order = action.payload.orders[0];
     });
   }
 });
+
+export const numberedReducer = numberedSlice.reducer;
