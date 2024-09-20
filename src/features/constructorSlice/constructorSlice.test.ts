@@ -61,7 +61,8 @@ describe('constructorSlice test', () => {
     };
     const afterState = constructorReducer(beforeState, {
       type: constructorThunk.rejected.type,
-      error: new Error('rejected')
+      error: new Error('rejected'),
+      isIngredientsLoading: true
     });
 
     expect(beforeState).toEqual(afterState);

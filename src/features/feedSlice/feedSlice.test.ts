@@ -19,7 +19,8 @@ describe('feedSlice test', () => {
     };
     const afterState = feedSliceReducer(beforeState, {
       type: feedThunk.rejected.type,
-      error: new Error('rejected')
+      error: new Error('rejected'),
+      isLoaded: false
     });
 
     expect(beforeState).toEqual(afterState);

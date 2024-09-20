@@ -24,7 +24,8 @@ describe('profieOrderSlice test', () => {
     };
     const afterState = orderReducer(beforeState, {
       type: profileOrderThunk.rejected.type,
-      error: new Error('rejected')
+      error: new Error('rejected'),
+      isLoaded: false
     });
     expect(beforeState).toEqual(afterState);
   });

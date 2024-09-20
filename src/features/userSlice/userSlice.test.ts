@@ -67,7 +67,8 @@ describe('registerSlice test', () => {
     };
     const afterState = registerReducer(beforeState, {
       type: registerThunk.rejected.type,
-      error: new Error('rejected')
+      error: new Error('rejected'),
+      isSubmited: false
     });
 
     expect(beforeState).toEqual(afterState);

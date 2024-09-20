@@ -24,7 +24,8 @@ describe('profieOrderSlice test', () => {
     };
     const afterState = numberedReducer(beforeState, {
       type: numberedThunk.rejected.type,
-      error: new Error('rejected')
+      error: new Error('rejected'),
+      isLoaded: false
     });
     expect(beforeState).toEqual(afterState);
   });
