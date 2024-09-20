@@ -13,9 +13,11 @@ describe('orderTest', () => {
     cy.get(`[data-cy='burgerOredrBTN']`).click(); //Создание заказа
     cy.wait(1000); // Ожидание создания заказа
     const modal = cy.get('#modals');
-    modal.get(`h2`).should('be.visible').and('have.text', '1234'); //Проверка модального окна на открытие и проверка подставных данных заказа
-    modal.get(`.b_7mdKCbZ9NwpuNYvKgW button`).click(); //Закрытие модального окна
-    cy.get('#modals').should(`not.be.visible`); //Проверяется успешность закрытия модального окна
+    modal.within(() => {
+      cy.get(`h2`).should('be.visible').and('have.text', '1234'); //Проверка модального окна на открытие и проверка подставных данных заказа;
+      cy.get(`button`).click(); //Закрытие модального окна
+    });
+    modal.should(`not.be.visible`); //Проверяется успешность закрытия модального окна
     cy.get(`[data-cy='constructor-bun']`).should('have.text', 'Выберите булки'); //Проверка конструктора на пустоту
     cy.get(`[data-cy='constructor-main']`).should(
       'have.text',
